@@ -4,7 +4,6 @@ const toastCSS = `
 .v-toast--fade-in {
     animation: fadeIn 0.15s ease-in-out forwards;
 }
-
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -13,11 +12,9 @@ const toastCSS = `
         opacity: 1;
     }
 }
-
 .v-toast--fade-out {
     animation: fadeOut 0.15s ease-in-out forwards;
 }
-
 @keyframes fadeOut {
     from {
         opacity: 1;
@@ -25,8 +22,7 @@ const toastCSS = `
     to {
         opacity: 0;
     }
-}
-`;
+}`;
 interface ToastOptions {
   message: string;
   duration: number;
