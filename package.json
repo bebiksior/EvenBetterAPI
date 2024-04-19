@@ -1,0 +1,24 @@
+{
+  "name": "@evenbetter/evenbetter-api",
+  "version": "1.0.0",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "type": "module",
+  "author": "bebiks <bebiks@cvssadvisor.com>",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "build": "bun build ./example/index.ts --outfile ./example/final/index.js --minify"
+  },
+  "files": [
+    "src/*"
+  ],
+  "dependencies": {
+    "@caido/sdk-frontend": "^0.35.0"
+  }
+}
