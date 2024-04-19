@@ -1,5 +1,5 @@
 # EvenBetterAPI [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20me)](https://twitter.com/bebiksior) 
-[![NPM Version](https://img.shields.io/npm/v/@evenbetter/evenbetter-api?style=for-the-badge)](https://www.npmjs.com/package/@evenbetter/evenbetter-api)
+[![NPM Version](https://img.shields.io/npm/v/@bebiks/evenbetter-api?style=for-the-badge)](https://www.npmjs.com/package/@bebiks/evenbetter-api)
 
 
 `EvenBetterAPI` is a API that is used in [EvenBetter](https://github.com/bebiksior/EvenBetter).
@@ -15,12 +15,12 @@ This is not official Caido frontend API. Official Caido frontend API can be foun
 ## Installation
 You can install EvenBetterAPI by running:
 ```bash
-npm i @evenbetter/evenbetter-api
+npm i @bebiks/evenbetter-api
 ```
 
 ## Example
 ```javascript
-import EvenBetterAPI from "@evenbetter/evenbetter-api";
+import EvenBetterAPI from "@bebiks/evenbetter-api";
 import { Caido } from "@caido/sdk-frontend";
 
 // Function to generate a page with navigation bar and content
