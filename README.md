@@ -6,8 +6,37 @@
 
 Here's what you can do with this API:
 - Listen to custom events like: `onCaidoLoad`, `onContextMenuOpen`, `onPageOpen`, `onSettingsTabOpen`.
-- Create tables and fill it with your data by using the `EvenBetterAPI.components.table` object.
-- Open and close modals by using the `EvenBetterAPI.modal` object.
+- Create tables and fill it with your data by using the `EvenBetterAPI.components.createTable` object.
+- Create navigation menus by using the `EvenBetterAPI.components.createNavigationBar` function.
+- Add prompts to commands in the command palette by using the `EvenBetterAPI.promptCommands.createPromptCommand` function.
+- Create components such as text inputs, checkboxes, etc. by using the `EvenBetterAPI.components` object.
+- Open modals by using the `EvenBetterAPI.modal` object.
+- Show toast notifications by using the `EvenBetterAPI.toast` object.
+- Enable [hot-reloading support](https://github.com/bebiksior/LiveCaidoReload) by using the `EvenBetterAPI.hotReloading()` function
+
+## Example: creating a table
+```javascript
+const randomTable = EvenBetterAPI.components.createTable({
+    tableHeight: "40em",
+    columns: [
+      { name: "Name", width: "15em" },
+      { name: "Value", width: "15em" },
+    ],
+});
+
+randomTable.addRow([
+  {
+    columnName: "Name",
+    value: "EvenBetterAPI",
+  },
+  {
+    columnName: "Value",
+    value: "Awesome",
+  },
+])
+
+randomTable.getHTMLElement(); // returns the table HTMLElement
+```
 
 ## Note
 This is not official Caido frontend API. Official Caido frontend API can be found at [Caido SDK Frontend](https://github.com/caido/sdk-frontend). You can use this API in your own Caido frontend plugins.
@@ -19,80 +48,7 @@ npm i @bebiks/evenbetter-api
 ```
 
 ## Example
-```javascript
-import EvenBetterAPI from "@bebiks/evenbetter-api";
-import { Caido } from "@caido/sdk-frontend";
 
-// Function to generate a page with navigation bar and content
-function generatePage(): HTMLElement {
-  const body = document.createElement("div");
-  body.style.gap = "0.5em";
-  body.style.display = "flex";
-  body.style.flexDirection = "column";
-  
-  // Create navigation bar
-  const navigationBar = EvenBetterAPI.components.createNavigationBar({
-    title: "Example",
-    items: [
-      { title: "Example", url: "#/example" },
-      { title: "Hello", url: "#/hello" },
-    ],
-  });
-  body.appendChild(navigationBar);
-
-  body.appendChild(generateRandomTable());
-
-  return body;
-}
-
-const generateRandomRow = () => {
-  const row = new Map<string, string>();
-  row.set("Name", "Item " + Math.floor(Math.random() * 1000));
-  row.set("Value", "Value " + Math.floor(Math.random() * 100));
-  row.set("Version", "v" + Math.floor(Math.random() * 10) + ".0");
-  row.set("Date", new Date().toLocaleDateString());
-  return row;
-};
-
-// Generate a table with 20 randomized rows
-const generateRandomTable = ()  => {
-  const tableData = Array.from({ length: 20 }, () => generateRandomRow());
-
-  const randomTable = EvenBetterAPI.components.table.createTable({
-    columns: [
-      { name: "Name", width: "15em" },
-      { name: "Value", width: "20em" },
-      { name: "Version", width: "10em" },
-      { name: "Date", width: "10em" },
-    ],
-    data: tableData,
-    height: "500px",
-  });
-  
-  randomTable.style.backgroundColor = "var(--c-bg-subtle)";
-  return randomTable;
-}
-
-// Register /example and /hello so we can navigate to them
-Caido.navigation.addPage("/example", {
-  body: generatePage(),
-});
-
-Caido.navigation.addPage("/hello", {
-  body: generatePage(),
-});
-
-// Add an "Example" item to the sidebar
-Caido.sidebar.registerItem("Example", "/example");
-
-// Open a modal when Caido is loaded
-EvenBetterAPI.eventManager.on("onCaidoLoad", () => {
-  EvenBetterAPI.modal.openModal({
-    title: "Hello, World!",
-    content: "This is a modal",
-  });
-});
-```
 
 ## Community
 Come join Caido community on [Discord](https://links.caido.io/www-discord). EvenBetter has separate channel `#evenbetter`. Feel free to ask questions, share your ideas and report bugs :D
