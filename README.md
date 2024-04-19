@@ -47,8 +47,5 @@ You can install EvenBetterAPI by running:
 npm i @bebiks/evenbetter-api
 ```
 
-## Example
-
-
 ## Community
 Come join Caido community on [Discord](https://links.caido.io/www-discord). EvenBetter has separate channel `#evenbetter`. Feel free to ask questions, share your ideas and report bugs :D
