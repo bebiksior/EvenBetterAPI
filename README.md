@@ -38,6 +38,9 @@ randomTable.addRow([
 randomTable.getHTMLElement(); // returns the table HTMLElement
 ```
 
+## Example Plugin
+For a full example of how to use this API, check out the [EvenBetterPluginExample](https://github.com/bebiksior/EvenBetterPluginExample) repository.
+
 ## Note
 This is not official Caido frontend API. Official Caido frontend API can be found at [Caido SDK Frontend](https://github.com/caido/sdk-frontend). You can use this API in your own Caido frontend plugins.
 
