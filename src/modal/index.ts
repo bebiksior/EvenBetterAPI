@@ -82,46 +82,44 @@ document.addEventListener("keydown", (e) => {
 });
 
 const generateModal = ({ title, content }: ModalContent): HTMLDivElement => {
-  loadCSS({ id: "evenbetterapi-modal", cssText: modalCSS });
+  loadCSS({ id: "evenbetterapi-modal", cssText: modalCSS.toString() });
 
   const modal = document.createElement("div");
   modal.classList.add("evenbetter-modal");
 
-  modal.innerHTML = `
-      <div class="evenbetter-modal__content">
-        <div class="evenbetter-modal__content-header">
-          <h2 class="evenbetter-modal__content-header-title"></h2>
-        </div>
-        <div class="evenbetter-modal__content-body">
-          <p class="evenbetter-modal__content-body-text"></p>
-          <button class="evenbetter-modal__content-body-close">
-            Close
-          </button>
-        </div>
-      </div>
-    `;
+  const modalContent = document.createElement("div");
+  modalContent.classList.add("evenbetter-modal__content");
 
-  const modalTitle = modal.querySelector(
-    ".evenbetter-modal__content-header-title"
-  );
-  if (!modalTitle) {
-    throw new Error("Modal title not found");
-  }
+  const modalContentHeader = document.createElement("div");
+  modalContentHeader.classList.add("evenbetter-modal__content-header");
 
+  const modalTitle = document.createElement("h2");
+  modalTitle.classList.add("evenbetter-modal__content-header-title");
   modalTitle.textContent = title;
 
-  const modalBody = modal.querySelector(".evenbetter-modal__content-body-text");
-  if (!modalBody) {
-    throw new Error("Modal body not found");
-  }
+  modalContentHeader.appendChild(modalTitle);
 
-  modalBody.innerHTML = content;
+  const modalContentBody = document.createElement("div");
+  modalContentBody.classList.add("evenbetter-modal__content-body");
+
+  const modalBodyText = document.createElement("p");
+  modalBodyText.classList.add("evenbetter-modal__content-body-text");
+  modalBodyText.textContent = content;
+
+  const closeButton = document.createElement("button");
+  closeButton.classList.add("evenbetter-modal__content-body-close");
+  closeButton.textContent = "Close";
+  closeButton.addEventListener("click", closeModal);
+
+  modalContentBody.appendChild(modalBodyText);
+  modalContentBody.appendChild(closeButton);
+
+  modalContent.appendChild(modalContentHeader);
+  modalContent.appendChild(modalContentBody);
+
+  modal.appendChild(modalContent);
 
   modal.setAttribute("data-modal-title", title);
-
-  modal
-    .querySelector(".evenbetter-modal__content-body-close")
-    ?.addEventListener("click", closeModal);
 
   return modal;
 };
