@@ -1,6 +1,28 @@
 import loadCSS from "../css";
-import toastCSS from "./toast.css";
 
+const toastCSS = `
+.v-toast--fade-in {
+    animation: fadeIn 0.15s ease-in-out forwards;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.v-toast--fade-out {
+    animation: fadeOut 0.15s ease-in-out forwards;
+}
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}`;
 interface ToastOptions {
   message: string;
   duration: number;
@@ -40,7 +62,7 @@ const createToastElement = (
 
 export const showToast = (toastOptions: ToastOptions): void => {
   const { message, type, position, duration } = toastOptions;
-  loadCSS({ id: "eb-toast", cssText: toastCSS.toString() });
+  loadCSS({ id: "eb-toast", cssText: toastCSS });
 
   let toastContainer = document.querySelector(
     `.v-toast--${position}`
