@@ -1,0 +1,22 @@
+.v-toast--fade-in {
+  animation: fadeIn 0.15s ease-in-out forwards;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.v-toast--fade-out {
+  animation: fadeOut 0.15s ease-in-out forwards;
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

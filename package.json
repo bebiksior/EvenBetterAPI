@@ -13,7 +13,7 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "build": "bun build ./example/index.ts --outfile ./example/final/index.js --minify"
+    "build": "bun run build.ts"
   },
   "files": [
     "src/*"
