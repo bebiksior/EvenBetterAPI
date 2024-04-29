@@ -37,14 +37,14 @@ export const hotReloading = async () => {
 
       switch (eventType) {
         case "caido:loadJS":
-          updateViewerSettings(eventDataPayload, "");
+          updateViewerSettings(eventDataPayload, "").then(() => {
+            setTimeout(() => window.location.reload(), 25);
+          });
           break;
         case "caido:loadCSS":
-          updateViewerSettings("", eventDataPayload);
-          break;
-        case "caido:reload":
-          localStorage.setItem("previousPath", window.location.hash);
-          location.reload();
+          updateViewerSettings("", eventDataPayload).then(() => {
+            setTimeout(() => window.location.reload(), 25);
+          });
           break;
         default:
           console.error("Unknown event type received:", eventType);

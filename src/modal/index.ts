@@ -2,7 +2,7 @@ import loadCSS from "../css";
 
 type ModalContent = {
   title: string;
-  content: string;
+  content: string | HTMLElement;
 };
 
 const modalCSS = `
@@ -104,7 +104,12 @@ const generateModal = ({ title, content }: ModalContent): HTMLDivElement => {
 
   const modalBodyText = document.createElement("p");
   modalBodyText.classList.add("evenbetter-modal__content-body-text");
-  modalBodyText.textContent = content;
+  
+  if (typeof content === "string") {
+    modalBodyText.innerHTML = content;
+  } else if (content instanceof HTMLElement) {
+    modalBodyText.appendChild(content);
+  }
 
   const closeButton = document.createElement("button");
   closeButton.classList.add("evenbetter-modal__content-body-close");

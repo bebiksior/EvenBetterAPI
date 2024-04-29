@@ -38,6 +38,7 @@ interface EvenBetterAPI {
   promptCommands: typeof PromptCommandAPI;
   hotReloading: typeof hotReloading;
   loadCSS: typeof loadCSS;
+  version: string;
 }
 
 function initializeEvenBetterAPI(): EvenBetterAPI {
@@ -81,6 +82,7 @@ function initializeEvenBetterAPI(): EvenBetterAPI {
     loadCSS,
     promptCommands: PromptCommandAPI,
     hotReloading,
+    version: "1.2.0",
   };
 }
 
