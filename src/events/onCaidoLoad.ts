@@ -23,5 +23,5 @@ export class OnCaidoLoad implements Event {
 }
 
 const isCaidoLoaded = () => {
-  return document.querySelector(".c-authenticated") !== null;
+  return document.querySelector(".c-content") !== null;
 };

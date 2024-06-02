@@ -1,4 +1,6 @@
-import loadCSS from "../css";
+import type { EvenBetterAPI } from "..";
+import { setWelcomeToast } from "../storage";
+import { getCaidoAPI } from "../utils/caidoapi";
 
 const toastCSS = `
 .v-toast--fade-in {
@@ -23,11 +25,11 @@ const toastCSS = `
         opacity: 0;
     }
 }`;
-interface ToastOptions {
+export interface ToastOptions {
   message: string;
-  duration: number;
-  position: "top" | "bottom";
-  type: "info" | "success" | "warning" | "error";
+  duration?: number;
+  position?: "top" | "bottom";
+  type?: "info" | "success" | "warning" | "error";
 }
 
 const createToastElement = (
@@ -60,9 +62,13 @@ const createToastElement = (
   return toastElement;
 };
 
-export const showToast = (toastOptions: ToastOptions): void => {
-  const { message, type, position, duration } = toastOptions;
-  loadCSS({ id: "eb-toast", cssText: toastCSS });
+const showToast = (toastOptions: ToastOptions): void => {
+  let { message, type, position, duration } = toastOptions;
+
+  // default values
+  if (!position) position = "bottom";
+  if (!type) type = "success";
+  if (!duration) duration = 3000;
 
   let toastContainer = document.querySelector(
     `.v-toast--${position}`
@@ -85,3 +91,19 @@ export const showToast = (toastOptions: ToastOptions): void => {
     }, 150);
   }, duration - 150);
 };
+
+export class ToastAPI {
+  private evenBetterAPI: EvenBetterAPI;
+  constructor(evenBetterAPI: EvenBetterAPI) {
+    this.evenBetterAPI = evenBetterAPI;
+    this.evenBetterAPI.helpers.loadCSS({ id: "eb-toast", cssText: toastCSS });
+  }
+
+  showToast = (toastOptions: ToastOptions): void => {
+    showToast(toastOptions);
+  };
+
+  setWelcomeMessage = (toastOptions: ToastOptions): void => {
+    setWelcomeToast(toastOptions);
+  };
+}

@@ -1,6 +1,6 @@
-import loadCSS from "../css";
-
+import { EvenBetterAPI } from "..";
 type ModalContent = {
+  modalAPI: ModalAPI;
   title: string;
   content: string | HTMLElement;
 };
@@ -75,15 +75,11 @@ const modalCSS = `
   }
 `;
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    closeModal();
-  }
-});
-
-const generateModal = ({ title, content }: ModalContent): HTMLDivElement => {
-  loadCSS({ id: "evenbetterapi-modal", cssText: modalCSS.toString() });
-
+const generateModal = ({
+  modalAPI,
+  title,
+  content,
+}: ModalContent): HTMLDivElement => {
   const modal = document.createElement("div");
   modal.classList.add("evenbetter-modal");
 
@@ -104,7 +100,7 @@ const generateModal = ({ title, content }: ModalContent): HTMLDivElement => {
 
   const modalBodyText = document.createElement("p");
   modalBodyText.classList.add("evenbetter-modal__content-body-text");
-  
+
   if (typeof content === "string") {
     modalBodyText.innerHTML = content;
   } else if (content instanceof HTMLElement) {
@@ -114,7 +110,7 @@ const generateModal = ({ title, content }: ModalContent): HTMLDivElement => {
   const closeButton = document.createElement("button");
   closeButton.classList.add("evenbetter-modal__content-body-close");
   closeButton.textContent = "Close";
-  closeButton.addEventListener("click", closeModal);
+  closeButton.addEventListener("click", modalAPI.closeModal);
 
   modalContentBody.appendChild(modalBodyText);
   modalContentBody.appendChild(closeButton);
@@ -133,16 +129,39 @@ const isModalOpen = (): boolean => {
   return document.querySelector(".evenbetter-modal") !== null;
 };
 
-export const closeModal = (): void => {
-  const modal = document.querySelector(".evenbetter-modal");
-  modal?.remove();
-};
+export class ModalAPI {
+  private evenBetterAPI: EvenBetterAPI;
+  constructor(evenBetterAPI: EvenBetterAPI) {
+    this.evenBetterAPI = evenBetterAPI;
+    this.evenBetterAPI.helpers.loadCSS({
+      id: "evenbetterapi-modal",
+      cssText: modalCSS.toString(),
+    });
 
-export const openModal = ({ title, content }: ModalContent): void => {
-  if (isModalOpen()) {
-    closeModal();
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        this.closeModal();
+      }
+    });
   }
 
-  const modal = generateModal({ title, content });
-  document.body.appendChild(modal);
-};
+  openModal({
+    title,
+    content,
+  }: {
+    title: string;
+    content: string | HTMLElement;
+  }): void {
+    if (isModalOpen()) {
+      this.closeModal();
+    }
+
+    const modal = generateModal({ modalAPI: this, title, content });
+    document.body.appendChild(modal);
+  }
+
+  closeModal(): void {
+    const modal = document.querySelector(".evenbetter-modal");
+    modal?.remove();
+  }
+}

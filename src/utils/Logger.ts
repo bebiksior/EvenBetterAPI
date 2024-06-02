@@ -3,10 +3,13 @@ export enum LogLevel {
   ERROR = "error",
   WARN = "warn",
 }
-window.global = window;
+
+const DEBUG = false;
 
 export class Logger {
   log(level: LogLevel, message: string) {
+    if (!DEBUG) return;
+    
     const date = new Date();
     const prefix = `${date.toString()} [EvenBetterAPI]`;
 

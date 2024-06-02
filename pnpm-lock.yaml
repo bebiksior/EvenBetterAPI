@@ -1,0 +1,22 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      '@caido/sdk-frontend':
+        specifier: ^0.37.0
+        version: 0.37.0
+
+packages:
+
+  '@caido/sdk-frontend@0.37.0':
+    resolution: {integrity: sha512-+rhS7IPihH5si5+RBtT+KZiBu0kh0zWKnj6Wxx03tX5NgJv+TpVDWnSDvCxXph5rVh+HExtbVyiYEUKxyZ6nrQ==}
+
+snapshots:
+
+  '@caido/sdk-frontend@0.37.0': {}

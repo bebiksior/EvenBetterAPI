@@ -12,12 +12,15 @@ Here's what you can do with this API:
 - Create components such as text inputs, checkboxes, etc. by using the `EvenBetterAPI.components` object.
 - Open modals by using the `EvenBetterAPI.modal` object.
 - Show toast notifications by using the `EvenBetterAPI.toast` object.
-- Enable [hot-reloading support](https://github.com/bebiksior/LiveCaidoReload) by using the `EvenBetterAPI.hotReloading()` function
 
 ## Example: creating a table
 ```javascript
-const randomTable = EvenBetterAPI.components.createTable({
-    tableHeight: "40em",
+const evenBetterAPI = new EvenBetterAPI(caido, {
+  manifestID: "evenbetter-sampleplugin",
+  name: "EvenBetter: Sample Plugin",
+});
+
+const randomTable = evenBetterAPI.components.createTable({
     columns: [
       { name: "Name", width: "15em" },
       { name: "Value", width: "15em" },
@@ -47,7 +50,7 @@ This is not official Caido frontend API. Official Caido frontend API can be foun
 ## Installation
 You can install EvenBetterAPI by running:
 ```bash
-npm i @bebiks/evenbetter-api
+pnpm i @bebiks/evenbetter-api
 ```
 
 ## Community

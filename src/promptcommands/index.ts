@@ -1,6 +1,5 @@
-import { Caido } from "@caido/sdk-frontend";
-import EvenBetterAPI from "..";
-import type { EventManager } from "../events/EventManager";
+import { EvenBetterAPI } from "..";
+import { getCaidoAPI } from "../utils/caidoapi";
 
 interface PromptCommand {
   commandName: string;
@@ -10,18 +9,7 @@ interface PromptCommand {
 
 let promptCommands: PromptCommand[] = [];
 
-export const setupPromptCommands = (eventManager: EventManager) => {
-  eventManager.on("onCommandRun", (commandName: string) => {
-    const promptCommand = promptCommands.find(
-      (promptCommand) => promptCommand.commandName === commandName
-    );
-    if (!promptCommand) return;
-
-    openPromptMenu(promptCommand);
-  });
-};
-
-const openPromptMenu = (promptCommand: PromptCommand) => {
+const openPromptMenu = (evenBetterAPI: EvenBetterAPI, promptCommand: PromptCommand) => {
   const promptMenu = document.createElement("div");
   promptMenu.classList.add("custom");
 
@@ -60,7 +48,7 @@ const openPromptMenu = (promptCommand: PromptCommand) => {
   });
   promptMenuWrapper.appendChild(promptMenuBody);
 
-  const promptInput = EvenBetterAPI.components.createTextInput(
+  const promptInput = evenBetterAPI.components.createTextInput(
     "100%",
     promptCommand.promptPlaceholder
   );
@@ -70,7 +58,7 @@ const openPromptMenu = (promptCommand: PromptCommand) => {
   });
   promptMenuBody.appendChild(promptInput);
 
-  const promptSubmitButton = Caido.ui.button({
+  const promptSubmitButton = getCaidoAPI().ui.button({
     label: "Submit",
     variant: "primary",
   });
@@ -96,6 +84,7 @@ const openPromptMenu = (promptCommand: PromptCommand) => {
 };
 
 const createPromptCommand = (
+  EvenBetterAPI: EvenBetterAPI,
   commandName: string,
   promptPlaceholder: string,
   onPrompt: (promptValue: string) => void
@@ -107,6 +96,27 @@ const createPromptCommand = (
   });
 };
 
-export const PromptCommandAPI = {
-  createPromptCommand,
-};
+export class PromptCommandAPI {
+  private apiInstance: EvenBetterAPI;
+
+  constructor(apiInstance: EvenBetterAPI) {
+    this.apiInstance = apiInstance;
+
+    this.apiInstance.eventManager.on("onCommandRun", (commandName: string) => {
+      const promptCommand = promptCommands.find(
+        (promptCommand) => promptCommand.commandName === commandName
+      );
+      if (!promptCommand) return;
+  
+      openPromptMenu(this.apiInstance, promptCommand);
+    });
+  }
+
+  createPromptCommand(
+    commandName: string,
+    promptPlaceholder: string,
+    onPrompt: (promptValue: string) => void
+  ) {
+    createPromptCommand(this.apiInstance, commandName, promptPlaceholder, onPrompt);
+  }
+}

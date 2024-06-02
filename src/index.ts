@@ -1,107 +1,75 @@
-import { createCheckbox } from "./components/checkbox";
-import { createNavigationBar } from "./components/navigationbar";
-import loadCSS from "./css";
 import { EventManager } from "./events/EventManager";
 import { OnCaidoLoad } from "./events/onCaidoLoad";
 import { OnContextMenuOpen } from "./events/onContextMenuOpen";
 import { OnPageOpen } from "./events/onPageOpen";
 import { OnSettingsTabOpen } from "./events/onSettingsTabOpen";
-import { closeModal, openModal } from "./modal";
-import { showToast } from "./toast";
-import { createTextInput } from './components/input';
+import { ToastAPI } from "./toast";
 import { OnCommandRun } from "./events/onCommandRun";
-import { PromptCommandAPI, setupPromptCommands } from "./promptcommands";
-import { hotReloading } from './hotReloading/index';
-import { createTable } from './components/table';
+import { EVENBETTERAPI_VERSION } from "./constants";
+import type { Caido } from "@caido/sdk-frontend";
+import { setCaidoAPI } from "./utils/caidoapi";
+import { ComponentsAPI } from "./components/components";
+import { PromptCommandAPI } from "./promptcommands";
+import { ModalAPI } from "./modal";
+import { HelpersAPI } from "./helpers";
+import { setPluginData } from "./utils/plugindata";
+import { TemplatesAPI } from "./templates";
+import { getWelcomeToast, setWelcomeToast } from "./storage";
 
-interface Modal {
-  openModal: typeof openModal;
-  closeModal: typeof closeModal;
+interface PluginData {
+  manifestID: string;
+  name: string;
 }
 
-interface Components {
-  createTable: typeof createTable;
-  createNavigationBar: typeof createNavigationBar;
-  createCheckbox: typeof createCheckbox;
-  createTextInput: typeof createTextInput;
-}
-
-interface Toast {
-  showToast: typeof showToast;
-}
-
-interface EvenBetterAPI {
-  modal: Modal;
-  toast: Toast;
-  components: Components;
+class EvenBetterAPI {
+  modal: ModalAPI;
+  toast: ToastAPI;
+  components: ComponentsAPI;
   eventManager: EventManager;
-  promptCommands: typeof PromptCommandAPI;
-  hotReloading: typeof hotReloading;
-  loadCSS: typeof loadCSS;
+  promptCommands: PromptCommandAPI;
+  templates: TemplatesAPI;
   version: string;
-}
+  helpers: HelpersAPI;
 
-function initializeEvenBetterAPI(): EvenBetterAPI {
-  const eventManager = new EventManager();
-  const onCaidoLoad = new OnCaidoLoad();
-  const onSettingsTabOpen = new OnSettingsTabOpen();
-  const onPageOpen = new OnPageOpen(eventManager);
-  const onContextMenuOpen = new OnContextMenuOpen();
-  const onCommandRun = new OnCommandRun();
+  constructor(caido: Caido, pluginData: PluginData) {
+    setCaidoAPI(caido);
+    setPluginData(pluginData);
 
-  eventManager.registerEvent("onCaidoLoad", onCaidoLoad);
-  eventManager.registerEvent("onSettingsTabOpen", onSettingsTabOpen);
-  eventManager.registerEvent("onPageOpen", onPageOpen);
-  eventManager.registerEvent("onContextMenuOpen", onContextMenuOpen);
-  eventManager.registerEvent("onCommandRun", onCommandRun);
-  eventManager.initEvents();
+    this.eventManager = new EventManager();
+    const onCaidoLoad = new OnCaidoLoad();
+    const onSettingsTabOpen = new OnSettingsTabOpen();
+    const onPageOpen = new OnPageOpen(this.eventManager);
+    const onContextMenuOpen = new OnContextMenuOpen();
+    const onCommandRun = new OnCommandRun();
 
-  setupPromptCommands(eventManager);
+    this.eventManager.registerEvent("onCaidoLoad", onCaidoLoad);
+    this.eventManager.registerEvent("onSettingsTabOpen", onSettingsTabOpen);
+    this.eventManager.registerEvent("onPageOpen", onPageOpen);
+    this.eventManager.registerEvent("onContextMenuOpen", onContextMenuOpen);
+    this.eventManager.registerEvent("onCommandRun", onCommandRun);
+    this.eventManager.on("onCaidoLoad", () => {
+      this.eventManager.triggerEvent("onPageOpen", {
+        newUrl: location.hash,
+        oldUrl: "",
+      });
 
-  const modal: Modal = {
-    openModal,
-    closeModal,
-  };
+      const welcomeToast = getWelcomeToast();
+      if (welcomeToast) {
+        this.toast.showToast(welcomeToast);
+        setWelcomeToast(undefined);
+      }
+    });
+    this.eventManager.initEvents();
 
-  const toast: Toast = {
-    showToast,
-  };
+    this.helpers = new HelpersAPI();
+    this.promptCommands = new PromptCommandAPI(this);
+    this.modal = new ModalAPI(this);
+    this.toast = new ToastAPI(this);
+    this.components = new ComponentsAPI(this);
+    this.templates = new TemplatesAPI(this);
 
-  const components: Components = {
-    createTable,
-    createNavigationBar,
-    createCheckbox,
-    createTextInput,
-  };
-
-  return {
-    modal,
-    toast,
-    components,
-    eventManager,
-    loadCSS,
-    promptCommands: PromptCommandAPI,
-    hotReloading,
-    version: "1.2.0",
-  };
-}
-
-declare global {
-  interface Window {
-    EvenBetterAPI?: EvenBetterAPI;
+    this.version = EVENBETTERAPI_VERSION;
   }
 }
 
-let EvenBetterAPI: EvenBetterAPI;
-
-if (typeof window !== "undefined" && window.EvenBetterAPI) {
-  EvenBetterAPI = window.EvenBetterAPI;
-} else {
-  EvenBetterAPI = initializeEvenBetterAPI();
-
-  if (typeof window !== "undefined") {
-    window.EvenBetterAPI = EvenBetterAPI;
-  }
-}
-
-export default EvenBetterAPI;
+export { EvenBetterAPI };

@@ -1,4 +1,4 @@
-import loadCSS from "../css";
+import type { EvenBetterAPI } from "..";
 
 const checkboxCSS = `
 .eb-checkbox__input {
@@ -32,9 +32,8 @@ const checkboxCSS = `
 }
 `;
 
-export const createCheckbox = () => {
-  loadCSS({ id: "checkbox", cssText: checkboxCSS });
-
+export const createCheckbox = (evenBetterAPI: EvenBetterAPI) => {
+  evenBetterAPI.helpers.loadCSS({ id: "checkbox", cssText: checkboxCSS });
   const checkbox = document.createElement("div");
   checkbox.classList.add("eb-button__label");
 

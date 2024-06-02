@@ -1,5 +1,4 @@
-import EvenBetterAPI from "..";
-import loadCSS from "../css";
+import type { EvenBetterAPI } from "..";
 
 const cssText = `
 .eb-text-input__inner {
@@ -25,12 +24,13 @@ const cssText = `
 `;
 
 export function createTextInput(
+  evenBetterAPI: EvenBetterAPI,
   width: string,
-  placeholder = "Search...",
+  placeholder: string | undefined,
   includeCopyButton = false,
   iconClass?: string
 ): HTMLDivElement {
-  loadCSS({ id: "eb-text-input", cssText: cssText });
+  evenBetterAPI.helpers.loadCSS({ id: "eb-text-input", cssText: cssText });
 
   const outerDiv = document.createElement("div");
   outerDiv.classList.add("formkit-outer", "c-text-input__outer");
@@ -55,7 +55,7 @@ export function createTextInput(
   if (iconClass) icon.classList.add(iconClass);
 
   const input = document.createElement("input");
-  input.setAttribute("placeholder", placeholder);
+  if (placeholder && placeholder != "") input.setAttribute("placeholder", placeholder);
   input.setAttribute("spellcheck", "false");
   input.classList.add("formkit-input", "c-text-input__input");
   input.setAttribute("type", "text");
@@ -78,7 +78,7 @@ export function createTextInput(
     );
     copyButton.addEventListener("click", () => {
       navigator.clipboard.writeText(input.value);
-      EvenBetterAPI.toast.showToast({
+      evenBetterAPI.toast.showToast({
         message: "Copied to clipboard",
         position: "bottom",
         type: "info",
