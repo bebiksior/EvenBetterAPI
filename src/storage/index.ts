@@ -11,13 +11,13 @@ export const getSetting = (key: string) => {
 };
 
 export const getWelcomeToast = () => {
-  return localStorage.getItem('ebapi:welcomeToast');
+  return localStorage.getItem(`ebapi:${getPluginData().manifestID}:welcomeToast`);
 }
 
 export const removeWelcomeToast = () => {
-  localStorage.removeItem('ebapi:welcomeToast');
+  localStorage.removeItem(`ebapi:${getPluginData().manifestID}:welcomeToast`);
 }
 
 export const setWelcomeToast = async (toast: any) => {
-  localStorage.setItem('ebapi:welcomeToast', toast);
+  localStorage.setItem(`ebapi:${getPluginData().manifestID}:welcomeToast`, toast);
 };
