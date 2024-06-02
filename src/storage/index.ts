@@ -14,6 +14,10 @@ export const getWelcomeToast = () => {
   return localStorage.getItem('ebapi:welcomeToast');
 }
 
+export const removeWelcomeToast = () => {
+  localStorage.removeItem('ebapi:welcomeToast');
+}
+
 export const setWelcomeToast = async (toast: any) => {
   localStorage.setItem('ebapi:welcomeToast', toast);
 };

@@ -14,7 +14,7 @@ import { ModalAPI } from "./modal";
 import { HelpersAPI } from "./helpers";
 import { setPluginData } from "./utils/plugindata";
 import { TemplatesAPI } from "./templates";
-import { getWelcomeToast, setWelcomeToast } from "./storage";
+import { getWelcomeToast, removeWelcomeToast } from "./storage";
 
 interface PluginData {
   manifestID: string;
@@ -56,7 +56,7 @@ class EvenBetterAPI {
       const welcomeToast = getWelcomeToast();
       if (welcomeToast) {
         this.toast.showToast(JSON.parse(welcomeToast));
-        setWelcomeToast(undefined);
+        removeWelcomeToast();
       }
     });
     this.eventManager.initEvents();
