@@ -1,1 +1,1 @@
-export const EVENBETTERAPI_VERSION = "1.4.0";
+export const EVENBETTERAPI_VERSION = "1.6.0";

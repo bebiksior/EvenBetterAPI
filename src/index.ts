@@ -55,7 +55,13 @@ class EvenBetterAPI {
 
       const welcomeToast = getWelcomeToast();
       if (welcomeToast) {
-        this.toast.showToast(JSON.parse(welcomeToast));
+        try {
+          this.toast.showToast(JSON.parse(welcomeToast));
+        } catch (e) {
+          console.error(e);
+          removeWelcomeToast();
+        }
+        
         removeWelcomeToast();
       }
     });
