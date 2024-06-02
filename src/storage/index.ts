@@ -1,3 +1,4 @@
+import type { ToastOptions } from "../toast";
 import { getPluginData } from "../utils/plugindata";
 
 export const setSetting = async (key: string, value: any) => {
@@ -18,6 +19,6 @@ export const removeWelcomeToast = () => {
   localStorage.removeItem(`ebapi:${getPluginData().manifestID}:welcomeToast`);
 }
 
-export const setWelcomeToast = async (toast: any) => {
-  localStorage.setItem(`ebapi:${getPluginData().manifestID}:welcomeToast`, toast);
+export const setWelcomeToast = async (toast: ToastOptions) => {
+  localStorage.setItem(`ebapi:${getPluginData().manifestID}:welcomeToast`, JSON.stringify(toast));
 };
