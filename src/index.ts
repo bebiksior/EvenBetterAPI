@@ -15,6 +15,7 @@ import { HelpersAPI } from "./helpers";
 import { setPluginData } from "./utils/plugindata";
 import { TemplatesAPI } from "./templates";
 import { getWelcomeToast, removeWelcomeToast } from "./storage";
+import { OnProjectChange } from "./events/onProjectChange";
 
 interface PluginData {
   manifestID: string;
@@ -41,12 +42,14 @@ class EvenBetterAPI {
     const onPageOpen = new OnPageOpen(this.eventManager);
     const onContextMenuOpen = new OnContextMenuOpen();
     const onCommandRun = new OnCommandRun();
+    const onProjectChange = new OnProjectChange();
 
     this.eventManager.registerEvent("onCaidoLoad", onCaidoLoad);
     this.eventManager.registerEvent("onSettingsTabOpen", onSettingsTabOpen);
     this.eventManager.registerEvent("onPageOpen", onPageOpen);
     this.eventManager.registerEvent("onContextMenuOpen", onContextMenuOpen);
     this.eventManager.registerEvent("onCommandRun", onCommandRun);
+    this.eventManager.registerEvent("onProjectChange", onProjectChange);
     this.eventManager.on("onCaidoLoad", () => {
       this.eventManager.triggerEvent("onPageOpen", {
         newUrl: location.hash,
