@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@caido/sdk-frontend':
-        specifier: ^0.37.0
-        version: 0.37.0
+        specifier: ^0.39.0
+        version: 0.39.0
 
 packages:
 
-  '@caido/sdk-frontend@0.37.0':
-    resolution: {integrity: sha512-+rhS7IPihH5si5+RBtT+KZiBu0kh0zWKnj6Wxx03tX5NgJv+TpVDWnSDvCxXph5rVh+HExtbVyiYEUKxyZ6nrQ==}
+  '@caido/sdk-frontend@0.39.0':
+    resolution: {integrity: sha512-XIY24OLh6hcefMdltgfvae2E4t8EhPpikYCihthYlSLJ+LaabRTPePVcdPS4avlMkQPIWm+S19cHCn+lNuNx6Q==}
 
 snapshots:
 
-  '@caido/sdk-frontend@0.37.0': {}
+  '@caido/sdk-frontend@0.39.0': {}

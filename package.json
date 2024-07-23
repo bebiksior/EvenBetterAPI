@@ -10,7 +10,7 @@
     "src/*"
   ],
   "dependencies": {
-    "@caido/sdk-frontend": "^0.37.0"
+    "@caido/sdk-frontend": "^0.39.0"
   },
   "scripts": {}
 }
