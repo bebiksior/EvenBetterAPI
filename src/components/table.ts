@@ -62,6 +62,7 @@ export class TableAPI {
       "p-datatable p-datatable-responsive-scroll p-datatable-striped p-datatable-sm";
     this.tableElement.style.overflow = "auto";
     this.tableElement.style.width = "100%";
+    this.tableElement.style.height = "100%";
     this.tableElement.innerHTML = generateTableHTML();
     this.tableBody = this.tableElement.querySelector(
       ".p-datatable-tbody"
