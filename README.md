@@ -1,6 +1,8 @@
 # EvenBetterAPI [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20me)](https://twitter.com/bebiksior) 
 [![NPM Version](https://img.shields.io/npm/v/@bebiks/evenbetter-api?style=for-the-badge)](https://www.npmjs.com/package/@bebiks/evenbetter-api)
 
+> [!NOTE]  
+> I think that current Caido SDK is enough for most of the things you might want to do. This API has been built when plugins were still a simple Custom JS box. I think that this API is still useful for things that need to edit core Caido functionality - thats why I still use it in reworked EvenBetter version.
 
 `EvenBetterAPI` is a API that is used in [EvenBetter](https://github.com/bebiksior/EvenBetter).
 
