@@ -6,7 +6,6 @@ import { OnSettingsTabOpen } from "./events/onSettingsTabOpen";
 import { ToastAPI } from "./toast";
 import { OnCommandRun } from "./events/onCommandRun";
 import { EVENBETTERAPI_VERSION } from "./constants";
-import type { Caido } from "@caido/sdk-frontend";
 import { setCaidoAPI } from "./utils/caidoapi";
 import { ComponentsAPI } from "./components/components";
 import { PromptCommandAPI } from "./promptcommands";
@@ -16,6 +15,7 @@ import { setPluginData } from "./utils/plugindata";
 import { TemplatesAPI } from "./templates";
 import { getWelcomeToast, removeWelcomeToast } from "./storage";
 import { OnProjectChange } from "./events/onProjectChange";
+import { Caido } from "@caido/sdk-frontend";
 
 interface PluginData {
   manifestID: string;
@@ -32,7 +32,7 @@ class EvenBetterAPI {
   version: string;
   helpers: HelpersAPI;
 
-  constructor(caido: Caido, pluginData: PluginData) {
+  constructor(caido: any, pluginData: PluginData) {
     setCaidoAPI(caido);
     setPluginData(pluginData);
 
@@ -64,7 +64,7 @@ class EvenBetterAPI {
           console.error(e);
           removeWelcomeToast();
         }
-        
+
         removeWelcomeToast();
       }
     });

@@ -15,4 +15,8 @@ export class OnSettingsTabOpen implements Event<string> {
 
     this.handlers.forEach((handler) => handler(data));
   }
+
+  removeHandler(handler: (data: string) => void): void {
+    this.handlers = this.handlers.filter((h) => h !== handler);
+  }
 }

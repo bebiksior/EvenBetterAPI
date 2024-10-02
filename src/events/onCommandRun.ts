@@ -63,4 +63,8 @@ export class OnCommandRun implements Event<string> {
   trigger(commandName: string): void {
     this.handlers.forEach((handler) => handler(commandName));
   }
+
+  removeHandler(handler: (commandName: string) => void): void {
+    this.handlers = this.handlers.filter((h) => h !== handler);
+  }
 }

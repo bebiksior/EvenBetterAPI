@@ -61,4 +61,8 @@ export class OnPageOpen implements Event<PageOpenEvent> {
 
     this.handlers.forEach((handler) => handler(data));
   }
+
+  removeHandler(handler: (data: PageOpenEvent) => void): void {
+    this.handlers = this.handlers.filter((h) => h !== handler);
+  }
 }

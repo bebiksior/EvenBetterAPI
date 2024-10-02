@@ -20,6 +20,10 @@ export class OnCaidoLoad implements Event {
   trigger(): void {
     this.handlers.forEach((handler) => handler());
   }
+
+  removeHandler(handler: () => void): void {
+    this.handlers = this.handlers.filter((h) => h !== handler);
+  }
 }
 
 const isCaidoLoaded = () => {

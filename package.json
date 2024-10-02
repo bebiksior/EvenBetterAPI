@@ -1,6 +1,6 @@
 {
   "name": "@bebiks/evenbetter-api",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
   "type": "module",
@@ -10,7 +10,7 @@
     "src/*"
   ],
   "dependencies": {
-    "@caido/sdk-frontend": "^0.39.0"
+    "@caido/sdk-frontend": "0.41.0"
   },
   "scripts": {}
 }

@@ -4,6 +4,7 @@ import log from "../utils/Logger";
 export interface Event<T = void> {
   init(): void;
   addHandler(handler: (data?: T) => void): void;
+  removeHandler(handler: (data?: T) => void): void;
   trigger(data?: T): void;
 }
 
@@ -23,12 +24,14 @@ export class EventManager {
     }
   }
 
-  on<T>(eventName: string, handler: (data: T) => void) {
+  on<T>(eventName: string, handler: (data: T) => void): () => void {
     const event = this.events[eventName];
     if (event) {
       event.addHandler(handler);
+      return () => event.removeHandler(handler);
     } else {
       console.error(`Event "${eventName}" not registered.`);
+      return () => {};
     }
   }
 

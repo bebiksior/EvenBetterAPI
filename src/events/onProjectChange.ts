@@ -37,4 +37,8 @@ export class OnProjectChange implements Event<string> {
   trigger(newProjectID: string): void {
     this.handlers.forEach((handler) => handler(newProjectID));
   }
+
+  removeHandler(handler: (newProjectID: string) => void): void {
+    this.handlers = this.handlers.filter((h) => h !== handler);
+  }
 }

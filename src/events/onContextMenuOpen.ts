@@ -30,4 +30,8 @@ export class OnContextMenuOpen implements Event<Element> {
   trigger(element: Element): void {
     this.handlers.forEach((handler) => handler(element));
   }
+
+  removeHandler(handler: (element: Element) => void): void {
+    this.handlers = this.handlers.filter((h) => h !== handler);
+  }
 }
