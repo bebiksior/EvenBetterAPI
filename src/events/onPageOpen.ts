@@ -34,10 +34,6 @@ export class OnPageOpen implements Event<PageOpenEvent> {
         if (oldPath.includes("?custom-path="))
           oldPath = oldPath.split("?custom-path=")[1];
 
-        document
-          .querySelector(".c-content")
-          ?.setAttribute("data-page", newPath);
-
         this.trigger({
           newUrl: newPath,
           oldUrl: oldPath,
@@ -51,6 +47,8 @@ export class OnPageOpen implements Event<PageOpenEvent> {
 
   trigger(data: PageOpenEvent) {
     log.info(`Page updated: ${data.oldUrl} -> ${data.newUrl}`);
+
+    document.querySelector(".c-content")?.setAttribute("data-page", data.newUrl);
 
     if (data.newUrl.startsWith("#/settings/")) {
       this.eventManager.triggerEvent(

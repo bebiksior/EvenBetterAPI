@@ -12,7 +12,11 @@ export class OnCaidoLoad implements Event {
     const interval = setInterval(() => {
       if (isCaidoLoaded()) {
         clearInterval(interval);
-        this.trigger();
+
+        // wait 300ms for other plugins to load
+        setTimeout(() => {
+          this.trigger();
+        }, 300);
       }
     }, 25);
   }
